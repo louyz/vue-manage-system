@@ -26,10 +26,14 @@ import { ElMessage } from 'element-plus';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import { User } from '@/types/user';
 import { fetchUserData } from '@/api';
+import { useOplogStore } from '@/store/oplog';
 import TableCustom from '@/components/table-custom.vue';
 import TableDetail from '@/components/table-detail.vue';
 import TableSearch from '@/components/table-search.vue';
 import { FormOption, FormOptionList } from '@/types/form-option';
+
+const oplog = useOplogStore();
+const currentUser = localStorage.getItem('vuems_name') || '';
 
 // 查询相关
 const query = reactive({
@@ -89,6 +93,15 @@ const handleEdit = (row: User) => {
     visible.value = true;
 };
 const updateData = () => {
+    const action = isEdit.value ? '编辑' : '新增';
+    const name = (rowData.value as User).name || '未知';
+    oplog.addLog({
+        username: currentUser,
+        type: action,
+        target: '用户管理',
+        content: `${action}用户：${name}`,
+        status: 1,
+    });
     closeDialog();
     getData();
 };
@@ -141,6 +154,13 @@ const handleView = (row: User) => {
 
 // 删除相关
 const handleDelete = (row: User) => {
+    oplog.addLog({
+        username: currentUser,
+        type: '删除',
+        target: '用户管理',
+        content: `删除用户：${row.name}`,
+        status: 1,
+    });
     ElMessage.success('删除成功');
 }
 </script>

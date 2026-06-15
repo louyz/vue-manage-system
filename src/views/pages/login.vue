@@ -47,6 +47,7 @@
 import { ref, reactive } from 'vue';
 import { useTabsStore } from '@/store/tabs';
 import { usePermissStore } from '@/store/permiss';
+import { useOplogStore } from '@/store/oplog';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
@@ -77,6 +78,7 @@ const rules: FormRules = {
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 };
 const permiss = usePermissStore();
+const oplog = useOplogStore();
 const login = ref<FormInstance>();
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
@@ -86,6 +88,13 @@ const submitForm = (formEl: FormInstance | undefined) => {
             localStorage.setItem('vuems_name', param.username);
             const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
             permiss.handleSet(keys);
+            oplog.addLog({
+                username: param.username,
+                type: '登录',
+                target: '系统',
+                content: '用户登录系统',
+                status: 1,
+            });
             router.push('/');
             if (checked.value) {
                 localStorage.setItem('login-param', JSON.stringify(param));

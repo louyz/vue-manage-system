@@ -1,0 +1,125 @@
+{
+    "list": [
+        {
+            "id": 1,
+            "username": "admin",
+            "type": "登录",
+            "target": "系统",
+            "content": "用户登录系统",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-15 09:00:12"
+        },
+        {
+            "id": 2,
+            "username": "admin",
+            "type": "新增",
+            "target": "用户管理",
+            "content": "新增用户：张三",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-15 09:15:30"
+        },
+        {
+            "id": 3,
+            "username": "admin",
+            "type": "编辑",
+            "target": "用户管理",
+            "content": "编辑用户：李四，修改手机号",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-15 10:20:45"
+        },
+        {
+            "id": 4,
+            "username": "user",
+            "type": "登录",
+            "target": "系统",
+            "content": "用户登录系统",
+            "ip": "192.168.1.101",
+            "status": 1,
+            "date": "2024-12-15 10:30:00"
+        },
+        {
+            "id": 5,
+            "username": "admin",
+            "type": "删除",
+            "target": "角色管理",
+            "content": "删除角色：测试角色",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-15 11:05:18"
+        },
+        {
+            "id": 6,
+            "username": "admin",
+            "type": "编辑",
+            "target": "菜单管理",
+            "content": "编辑菜单：系统管理",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-15 11:30:22"
+        },
+        {
+            "id": 7,
+            "username": "user",
+            "type": "查看",
+            "target": "用户管理",
+            "content": "查看用户详情：王五",
+            "ip": "192.168.1.101",
+            "status": 1,
+            "date": "2024-12-15 13:10:05"
+        },
+        {
+            "id": 8,
+            "username": "admin",
+            "type": "新增",
+            "target": "角色管理",
+            "content": "新增角色：运营人员",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-15 14:00:33"
+        },
+        {
+            "id": 9,
+            "username": "admin",
+            "type": "导出",
+            "target": "表格管理",
+            "content": "导出数据为Excel文件",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-15 14:25:10"
+        },
+        {
+            "id": 10,
+            "username": "admin",
+            "type": "登出",
+            "target": "系统",
+            "content": "用户退出系统",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-15 18:00:00"
+        },
+        {
+            "id": 11,
+            "username": "user",
+            "type": "登录",
+            "target": "系统",
+            "content": "用户登录失败，密码错误",
+            "ip": "192.168.1.102",
+            "status": 0,
+            "date": "2024-12-16 08:30:15"
+        },
+        {
+            "id": 12,
+            "username": "admin",
+            "type": "登录",
+            "target": "系统",
+            "content": "用户登录系统",
+            "ip": "192.168.1.100",
+            "status": 1,
+            "date": "2024-12-16 09:00:00"
+        }
+    ],
+    "pageTotal": 12
+}

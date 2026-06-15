@@ -65,6 +65,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useSidebarStore } from '../store/sidebar';
+import { useOplogStore } from '../store/oplog';
 import { useRouter } from 'vue-router';
 import imgurl from '../assets/img/img.jpg';
 
@@ -85,8 +86,16 @@ onMounted(() => {
 
 // 用户名下拉菜单选择事件
 const router = useRouter();
+const oplog = useOplogStore();
 const handleCommand = (command: string) => {
     if (command == 'loginout') {
+        oplog.addLog({
+            username: username || '',
+            type: '登出',
+            target: '系统',
+            content: '用户退出系统',
+            status: 1,
+        });
         localStorage.removeItem('vuems_name');
         router.push('/login');
     } else if (command == 'user') {

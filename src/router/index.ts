@@ -51,6 +51,15 @@ const routes: RouteRecordRaw[] = [
                 component: () => import(/* webpackChunkName: "system-menu" */ '../views/system/menu.vue'),
             },
             {
+                path: '/system-oplog',
+                name: 'system-oplog',
+                meta: {
+                    title: '操作日志',
+                    permiss: '14',
+                },
+                component: () => import(/* webpackChunkName: "system-oplog" */ '../views/system/oplog.vue'),
+            },
+            {
                 path: '/table',
                 name: 'basetable',
                 meta: {

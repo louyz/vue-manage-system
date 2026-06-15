@@ -20,3 +20,10 @@ export const fetchRoleData = () => {
         method: 'get'
     });
 };
+
+export const fetchOpLogData = () => {
+    return request({
+        url: './mock/oplog.json',
+        method: 'get'
+    });
+};
