@@ -6,7 +6,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 3
-rationale = "统一的日志数据结构是审计追踪的基础，确保每条日志记录包含足够的上下文信息，便于后续查询和问题定位"
+rationale = "已创建 src/types/oper-log.ts 文件并定义了 OperLog 接口（含主要字段）和 OperType 联合类型，但 OperModule 联合类型覆盖不完整（未完全覆盖7个模块），且未在其他模块中导入验证编译无报错，完成3/5测试点"
 
 [[criterion]]
 name = "关键操作行为记录覆盖"
@@ -15,7 +15,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 2
-rationale = "只有覆盖了所有关键操作行为的日志记录，才能实现完整的系统审计功能，避免操作盲区导致问题无法追溯"
+rationale = "已创建 Pinia oper-log store 并实现 addLog/clearLogs/queryLogs 基本方法和 localStorage 持久化，但仅在登录等少数业务节点埋入日志，用户管理、角色管理、导出等关键操作的日志采集未实现，完成2/5测试点"
 
 [[criterion]]
 name = "日志查询与筛选功能"
@@ -24,7 +24,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 3
-rationale = "日志数据量会随使用持续增长，高效的筛选和分页能力是管理员快速定位特定操作记录的必要手段"
+rationale = "已配置操作人、操作类型、所属模块三个搜索条件并实现基本过滤和分页切片逻辑，但搜索时未正确重置页码为第1页，三层过滤逻辑（模糊匹配+精确匹配）存在不完整之处，分页切换数据刷新验证不充分，完成3/5测试点"
 
 [[criterion]]
 name = "日志详情查看与清空功能"
@@ -33,7 +33,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 4
-rationale = "详情查看满足对单条操作的深入审计需求，清空功能用于日志生命周期管理，二次确认防止误操作导致审计数据丢失"
+rationale = "已实现详情弹窗（viewData + TableDetail 键值对展示）、清空按钮、ElMessageBox 二次确认及 clearLogs 清空 localStorage 并刷新表格，但 viewData 中8个详情展示项定义或行数据深拷贝逻辑存在小缺陷，完成4/5测试点"
 
 [[criterion]]
 name = "路由菜单与权限集成"
@@ -42,7 +42,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 3
-rationale = "操作日志作为系统管理功能的一部分，必须正确集成到现有的路由、菜单和权限体系中，确保用户能通过导航正常访问"
+rationale = "已添加 /oper-log 路由并设置懒加载，menu.ts 中已新增操作日志菜单项，但 permiss store 中 admin/user 权限列表的 14 追加不完整，侧边栏跳转或403拦截验证未全部通过，完成3/5测试点"
 
 [[criterion]]
 name = "日志页面视觉一致性"
@@ -51,4 +51,4 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 4
-rationale = "视觉化的标签渲染提升日志列表的可读性，使管理员能通过颜色快速识别操作类型和结果状态，降低审计效率的认知负担"
+rationale = "已实现操作类型 el-tag 颜色映射（登录绿、删除/清空红、编辑/授权橙等）和结果状态标签渲染，container 样式与系统管理页面风格统一，但操作列仅保留查看按钮的隐藏逻辑或个别颜色映射存在遗漏，完成4/5测试点"
