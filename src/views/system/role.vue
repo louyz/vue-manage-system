@@ -40,11 +40,15 @@ import { ref, reactive } from 'vue';
 import { ElMessage } from 'element-plus';
 import { Role } from '@/types/role';
 import { fetchRoleData } from '@/api';
+import { useOperLogStore } from '@/store/oper-log';
 import TableCustom from '@/components/table-custom.vue';
 import TableDetail from '@/components/table-detail.vue';
 import RolePermission from './role-permission.vue'
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import { FormOption, FormOptionList } from '@/types/form-option';
+
+const operLog = useOperLogStore();
+const currentUser = localStorage.getItem('vuems_name') || 'admin';
 
 // 查询相关
 const query = reactive({
@@ -102,6 +106,14 @@ const handleEdit = (row: Role) => {
     visible.value = true;
 };
 const updateData = () => {
+    operLog.addLog({
+        username: currentUser,
+        operType: isEdit.value ? '编辑' : '新增',
+        module: '角色管理',
+        content: isEdit.value ? `编辑角色：${(rowData.value as any).name}` : '新增角色',
+        ip: '192.168.1.100',
+        result: '成功',
+    });
     closeDialog();
     getData();
 };
@@ -143,6 +155,14 @@ const handleView = (row: Role) => {
 
 // 删除相关
 const handleDelete = (row: Role) => {
+    operLog.addLog({
+        username: currentUser,
+        operType: '删除',
+        module: '角色管理',
+        content: `删除角色：${row.name}`,
+        ip: '192.168.1.100',
+        result: '成功',
+    });
     ElMessage.success('删除成功');
 }
 
@@ -151,6 +171,14 @@ const handleDelete = (row: Role) => {
 const visible2 = ref(false);
 const permissOptions = ref({})
 const handlePermission = (row: Role) => {
+    operLog.addLog({
+        username: currentUser,
+        operType: '授权',
+        module: '角色管理',
+        content: `为角色「${row.name}」管理权限`,
+        ip: '192.168.1.100',
+        result: '成功',
+    });
     visible2.value = true;
     permissOptions.value = {
         id: row.id,

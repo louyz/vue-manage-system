@@ -47,6 +47,7 @@
 import { ref, reactive } from 'vue';
 import { useTabsStore } from '@/store/tabs';
 import { usePermissStore } from '@/store/permiss';
+import { useOperLogStore } from '@/store/oper-log';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
@@ -77,6 +78,7 @@ const rules: FormRules = {
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 };
 const permiss = usePermissStore();
+const operLog = useOperLogStore();
 const login = ref<FormInstance>();
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
@@ -86,6 +88,15 @@ const submitForm = (formEl: FormInstance | undefined) => {
             localStorage.setItem('vuems_name', param.username);
             const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
             permiss.handleSet(keys);
+            // 记录登录日志
+            operLog.addLog({
+                username: param.username,
+                operType: '登录',
+                module: '系统登录',
+                content: `用户 ${param.username} 登录系统`,
+                ip: '192.168.1.100',
+                result: '成功',
+            });
             router.push('/');
             if (checked.value) {
                 localStorage.setItem('login-param', JSON.stringify(param));

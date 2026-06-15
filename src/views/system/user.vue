@@ -26,10 +26,14 @@ import { ElMessage } from 'element-plus';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import { User } from '@/types/user';
 import { fetchUserData } from '@/api';
+import { useOperLogStore } from '@/store/oper-log';
 import TableCustom from '@/components/table-custom.vue';
 import TableDetail from '@/components/table-detail.vue';
 import TableSearch from '@/components/table-search.vue';
 import { FormOption, FormOptionList } from '@/types/form-option';
+
+const operLog = useOperLogStore();
+const currentUser = localStorage.getItem('vuems_name') || 'admin';
 
 // 查询相关
 const query = reactive({
@@ -89,6 +93,15 @@ const handleEdit = (row: User) => {
     visible.value = true;
 };
 const updateData = () => {
+    // 记录操作日志
+    operLog.addLog({
+        username: currentUser,
+        operType: isEdit.value ? '编辑' : '新增',
+        module: '用户管理',
+        content: isEdit.value ? `编辑用户：${(rowData.value as any).name}` : '新增用户',
+        ip: '192.168.1.100',
+        result: '成功',
+    });
     closeDialog();
     getData();
 };
@@ -141,6 +154,15 @@ const handleView = (row: User) => {
 
 // 删除相关
 const handleDelete = (row: User) => {
+    // 记录删除日志
+    operLog.addLog({
+        username: currentUser,
+        operType: '删除',
+        module: '用户管理',
+        content: `删除用户：${row.name}`,
+        ip: '192.168.1.100',
+        result: '成功',
+    });
     ElMessage.success('删除成功');
 }
 </script>

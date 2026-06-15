@@ -1,0 +1,54 @@
+
+[[criterion]]
+name = "日志类型定义完整性"
+description = "[Explicit]创建操作日志的类型定义文件，为日志模块提供统一的 TypeScript 类型约束。1:新建 src/types/oper-log.ts文件。2:定义 OperLog 接口，含 id、username、operType、module、content、ip、result、operTime字段。3:定义OperType联合类型，覆盖登录/退出/新增/编辑/删除/查询/导出/导入/授权/清空。4:定义 OperModule 联合类型，覆盖系统登录/用户管理/角色管理/菜单管理/操作日志/基础表格/主题设置。5:在其他模块中导入该类型，验证编译无报错"
+type = "likert"
+points = 5
+weight = 1.0
+score = 3
+rationale = "统一的日志数据结构是审计追踪的基础，确保每条日志记录包含足够的上下文信息，便于后续查询和问题定位"
+
+[[criterion]]
+name = "关键操作行为记录覆盖"
+description = "[Explicit]创建 Pinia 日志 Store 并在各关键业务节点埋入日志记录，实现操作自动采集与持久化。1:创建src/store/oper-log.ts，定义 useOperLogStore，实现 addLog/clearLogs/queryLogs，通过 localStorage 持久化。2:在login.vue 登录成功回调中调用 addLog 记录登录日志。3:在 user.vue 的新增/编辑/删除回调中调用 addLog记录用户管理操作日志。4:在 role.vue 的新增/编辑/删除/授权回调中调用 addLog 记录角色管理操作日志。5:在export.vue 导出完成时调用 addLog 记录导出操作日志"
+type = "likert"
+points = 5
+weight = 1.0
+score = 2
+rationale = "只有覆盖了所有关键操作行为的日志记录，才能实现完整的系统审计功能，避免操作盲区导致问题无法追溯"
+
+[[criterion]]
+name = "日志查询与筛选功能"
+description = "[Explicit]实现操作日志页面的多条件搜索和分页展示，支持管理员快速定位目标记录。1:配置三个搜索条件：操作人（input）、操作类型（select 含10个选项）、所属模块（select 含7个选项）。2:点击搜索时重置页码为第1页并重新加载数据。3:对日志数据依次执行用户名模糊匹配、操作类型精确匹配、模块精确匹配的三层过滤。4:按当前页码和每页10条进行切片，赋值给表格数据。5:配置9列表格并验证分页切换时数据正确刷新"
+type = "likert"
+points = 5
+weight = 1.0
+score = 3
+rationale = "日志数据量会随使用持续增长，高效的筛选和分页能力是管理员快速定位特定操作记录的必要手段"
+
+[[criterion]]
+name = "日志详情查看与清空功能"
+description = "[Explicit]实现单条日志详情弹窗和全部日志清空功能，兼顾审计深度与生命周期管理。1:定义 viewData 包含 row 和list（8个详情展示项）。2:点击行数据深拷贝到 viewData 并打开详情弹窗。3:弹窗中使用 TableDetail组件以键值对形式展示日志完整信息。4:工具栏放置清空按钮，点击后弹出 ElMessageBox 二次确认对话框。5:确认后调用clearLogs 清空 localStorage，提示成功并刷新表格"
+type = "likert"
+points = 5
+weight = 1.0
+score = 4
+rationale = "详情查看满足对单条操作的深入审计需求，清空功能用于日志生命周期管理，二次确认防止误操作导致审计数据丢失"
+
+[[criterion]]
+name = "路由菜单与权限集成"
+description = "[Explicit]将操作日志模块接入路由、菜单和权限体系，确保可通过导航正常访问。1:在 router 中添加 /oper-log路由，设置 permiss 为 14，懒加载组件。2:在 menu.ts 系统管理下新增操作日志菜单项。3:在 permiss store 的 admin权限列表追加 14。4:在 permiss store 的 user 权限列表追加14。5:启动验证侧边栏出现菜单项，点击跳转正常且不触发403拦截"
+type = "likert"
+points = 5
+weight = 1.0
+score = 3
+rationale = "操作日志作为系统管理功能的一部分，必须正确集成到现有的路由、菜单和权限体系中，确保用户能通过导航正常访问"
+
+[[criterion]]
+name = "日志页面视觉一致性"
+description = "[Explicit]对日志关键列使用彩色标签渲染，统一页面布局样式，与其他管理页面保持视觉一致。1:，使用 #operType插槽引入 el-tag，根据操作类型动态绑定颜色。2:映射颜色：登录-绿、删除/清空-红、编辑/授权-橙、退出/查询-灰、其余-蓝。3:使用 #result 插槽，成功显示绿色标签，失败显示红色标签。4:#operator插槽仅保留查看按钮，隐藏编辑和删除入口。5:添加 container样式（白色背景、边框、圆角），与系统管理其他页面风格统一"
+type = "likert"
+points = 5
+weight = 1.0
+score = 4
+rationale = "视觉化的标签渲染提升日志列表的可读性，使管理员能通过颜色快速识别操作类型和结果状态，降低审计效率的认知负担"

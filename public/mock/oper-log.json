@@ -1,0 +1,85 @@
+{
+    "list": [
+        {
+            "id": 1,
+            "username": "admin",
+            "operType": "登录",
+            "module": "系统登录",
+            "content": "用户 admin 登录系统",
+            "ip": "192.168.1.100",
+            "result": "成功",
+            "operTime": "2025-06-15 09:00:00"
+        },
+        {
+            "id": 2,
+            "username": "admin",
+            "operType": "新增",
+            "module": "用户管理",
+            "content": "新增用户：王五",
+            "ip": "192.168.1.100",
+            "result": "成功",
+            "operTime": "2025-06-15 09:15:30"
+        },
+        {
+            "id": 3,
+            "username": "admin",
+            "operType": "编辑",
+            "module": "用户管理",
+            "content": "编辑用户：张三",
+            "ip": "192.168.1.100",
+            "result": "成功",
+            "operTime": "2025-06-15 09:20:00"
+        },
+        {
+            "id": 4,
+            "username": "admin",
+            "operType": "删除",
+            "module": "用户管理",
+            "content": "删除用户：李四",
+            "ip": "192.168.1.100",
+            "result": "成功",
+            "operTime": "2025-06-15 09:25:00"
+        },
+        {
+            "id": 5,
+            "username": "admin",
+            "operType": "授权",
+            "module": "角色管理",
+            "content": "为角色「普通用户」分配权限",
+            "ip": "192.168.1.100",
+            "result": "成功",
+            "operTime": "2025-06-15 09:30:00"
+        },
+        {
+            "id": 6,
+            "username": "user",
+            "operType": "登录",
+            "module": "系统登录",
+            "content": "用户 user 登录系统",
+            "ip": "192.168.1.101",
+            "result": "成功",
+            "operTime": "2025-06-15 10:00:00"
+        },
+        {
+            "id": 7,
+            "username": "admin",
+            "operType": "导出",
+            "module": "基础表格",
+            "content": "导出表格数据",
+            "ip": "192.168.1.100",
+            "result": "成功",
+            "operTime": "2025-06-15 10:30:00"
+        },
+        {
+            "id": 8,
+            "username": "admin",
+            "operType": "查询",
+            "module": "用户管理",
+            "content": "查询用户列表",
+            "ip": "192.168.1.100",
+            "result": "成功",
+            "operTime": "2025-06-15 11:00:00"
+        }
+    ],
+    "pageTotal": 8
+}

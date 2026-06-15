@@ -19,6 +19,10 @@
 <script setup lang="ts" name="export">
 import { ref } from 'vue';
 import * as XLSX from 'xlsx';
+import { useOperLogStore } from '@/store/oper-log';
+
+const operLog = useOperLogStore();
+const currentUser = localStorage.getItem('vuems_name') || 'admin';
 
 interface TableItem {
     id: number;
@@ -64,6 +68,14 @@ const exportXlsx = () => {
     let new_workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(new_workbook, WorkSheet, '第一页');
     XLSX.writeFile(new_workbook, `表格.xlsx`);
+    operLog.addLog({
+        username: currentUser,
+        operType: '导出',
+        module: '基础表格',
+        content: '导出表格数据为Excel',
+        ip: '192.168.1.100',
+        result: '成功',
+    });
 };
 </script>
 
