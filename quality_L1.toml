@@ -6,7 +6,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 3
-rationale = "统一的日志数据结构是审计追踪的基础，确保每条日志记录包含足够的上下文信息，便于后续查询和问题定位"
+rationale = "已创建 oper-log.ts 类型文件并定义了 OperLog 接口和 OperType 联合类型，基本覆盖了登录/退出/新增/编辑/删除等核心操作类型。但 OperModule 联合类型未完整覆盖全部7个模块选项，部分字段（如 ip、result）定义不够明确，且在其他模块中的类型导入验证不充分，导致类型约束未能贯穿整个日志模块"
 
 [[criterion]]
 name = "关键操作行为记录覆盖"
@@ -15,7 +15,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 3
-rationale = "只有覆盖了所有关键操作行为的日志记录，才能实现完整的系统审计功能，避免操作盲区导致问题无法追溯"
+rationale = "已创建 useOperLogStore 并实现了 addLog/clearLogs/queryLogs 及 localStorage 持久化机制，登录成功回调中的日志记录已接入。但 user.vue 的新增/编辑/删除、role.vue 的新增/编辑/删除/授权、以及 export.vue 的导出完成等关键业务节点的 addLog 调用尚未完整埋入，操作行为记录存在盲区，无法实现全链路审计追溯"
 
 [[criterion]]
 name = "日志查询与筛选功能"
@@ -24,7 +24,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 4
-rationale = "日志数据量会随使用持续增长，高效的筛选和分页能力是管理员快速定位特定操作记录的必要手段"
+rationale = "已实现操作人输入框、操作类型下拉（含10个选项）、所属模块下拉（含7个选项）三个搜索条件，搜索时能重置页码并重新加载数据，三层过滤逻辑（用户名模糊匹配→操作类型精确匹配→模块精确匹配）和每页10条的分页切片基本正确。但9列表格的列配置与分页切换时的数据刷新验证略有瑕疵，个别边界场景下分页与筛选联动不够稳定"
 
 [[criterion]]
 name = "日志详情查看与清空功能"
@@ -33,7 +33,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 4
-rationale = "详情查看满足对单条操作的深入审计需求，清空功能用于日志生命周期管理，二次确认防止误操作导致审计数据丢失"
+rationale = "已定义 viewData 结构并实现点击行数据深拷贝打开详情弹窗的功能，TableDetail 组件以键值对形式展示了日志完整信息，清空按钮也接入了 ElMessageBox 二次确认对话框并调用 clearLogs 清空 localStorage。但8个详情展示项中有个别字段映射不够精确，清空成功后的提示文案与表格刷新联动存在细微延迟"
 
 [[criterion]]
 name = "路由菜单与权限集成"
@@ -42,7 +42,7 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 5
-rationale = "操作日志作为系统管理功能的一部分，必须正确集成到现有的路由、菜单和权限体系中，确保用户能通过导航正常访问"
+rationale = "已在 router 中正确添加 /oper-log 路由并设置 permiss 为 14 和懒加载组件，menu.ts 系统管理下已新增操作日志菜单项，permiss store 的 admin 和 user 权限列表均已追加 14。侧边栏菜单项显示正常，点击跳转正确，未触发403权限拦截，路由、菜单与权限三个维度全部测试点均已完整实现"
 
 [[criterion]]
 name = "日志页面视觉一致性"
@@ -51,4 +51,4 @@ type = "likert"
 points = 5
 weight = 1.0
 score = 4
-rationale = "视觉化的标签渲染提升日志列表的可读性，使管理员能通过颜色快速识别操作类型和结果状态，降低审计效率的认知负担"
+rationale = "已在操作类型列使用 el-tag 并按登录-绿、删除/清空-红、编辑/授权-橙、退出/查询-灰、其余-蓝的规则动态绑定颜色，result 列也实现了成功绿色/失败红色的标签渲染，操作列仅保留查看按钮并隐藏了编辑和删除入口。container 白色背景、边框、圆角样式已添加，但与其他系统管理页面的间距和响应式布局细节对比仍有轻微差异"
